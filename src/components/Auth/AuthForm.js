@@ -1,10 +1,12 @@
-import { useState, useRef } from 'react';
+import { useState, useRef, useContext } from 'react';
 import { restApikey } from '../../keys'
 import classes from './AuthForm.module.css';
-
+import AuthContext from '../../store/auth-context';
 const AuthForm = () => {
   const emailInputRef = useRef()
   const passwordInputRef = useRef()
+
+  const context = useContext(AuthContext)
   const [isLogin, setIsLogin] = useState(true);
   const [isLoading, setIsLoading] = useState(false);
 
@@ -51,6 +53,7 @@ const AuthForm = () => {
     })
       .then(data => {
         console.log(data)
+        context.login(data.idToken)
       })
       .catch(err => {
         alert(err.message)
