@@ -2,10 +2,11 @@ import { useState, useRef, useContext } from 'react';
 import { restApikey } from '../../keys'
 import classes from './AuthForm.module.css';
 import AuthContext from '../../store/auth-context';
+import { useHistory } from 'react-router-dom';
 const AuthForm = () => {
   const emailInputRef = useRef()
   const passwordInputRef = useRef()
-
+  const history = useHistory()
   const context = useContext(AuthContext)
   const [isLogin, setIsLogin] = useState(true);
   const [isLoading, setIsLoading] = useState(false);
@@ -54,6 +55,8 @@ const AuthForm = () => {
       .then(data => {
         console.log(data)
         context.login(data.idToken)
+        history.replace('/')
+
       })
       .catch(err => {
         alert(err.message)
